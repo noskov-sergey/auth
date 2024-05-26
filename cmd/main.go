@@ -6,9 +6,12 @@ import (
 	desc "github.com/noskov-sergey/auth/pkg/user_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"log"
+	"math/rand"
 	"net"
+	"strconv"
 	"time"
 )
 
@@ -23,14 +26,36 @@ func (s *server) Get(ctx context.Context, req *desc.GetRequest) (*desc.GetRespon
 
 	return &desc.GetResponse{
 		User: &desc.User{
-			Id:        1,
-			Name:      "testName",
+			Id:        req.GetId(),
+			Name:      "testName" + strconv.Itoa(int(req.GetId())),
 			Email:     "testName@mail.ru",
 			Role:      desc.Enum.Enum(1),
 			CreatedAt: timestamppb.New(time.Now()),
 			UpdatedAt: timestamppb.New(time.Now()),
 		},
 	}, nil
+}
+
+func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.CreateResponse, error) {
+	i := rand.Intn(100)
+
+	log.Printf("CreateRequest: %v", i)
+
+	return &desc.CreateResponse{
+		Id: int64(i),
+	}, nil
+}
+
+func (s *server) Update(ctx context.Context, req *desc.UpdateRequest) (*emptypb.Empty, error) {
+	log.Printf("UpdateMethod - User id: %v, rename to: %s, new email: %s", req.GetId(), req.GetName(), req.GetMail())
+
+	return &emptypb.Empty{}, nil
+}
+
+func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*emptypb.Empty, error) {
+	log.Printf("DeleteMethod - User id: %v", req.GetId())
+
+	return &emptypb.Empty{}, nil
 }
 
 func main() {
@@ -48,5 +73,4 @@ func main() {
 	if err = s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
-
 }
