@@ -20,7 +20,7 @@ jobs:
     - run: |
         echo The PR was merged
 
-  image-build-and-push:
+  images-build-and-push:
     runs-on: ubuntu-latest
 
     steps:
