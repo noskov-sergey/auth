@@ -15,7 +15,10 @@ import (
 	"time"
 )
 
-const grpcPort = 50051
+const (
+	grpcPort = 50051
+	dbDSN    = "host=localhost port=54321 dbname=auth user=auth-user password=auth-password"
+)
 
 type server struct {
 	desc.UnimplementedUserV1Server
