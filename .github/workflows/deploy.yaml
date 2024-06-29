@@ -1,10 +1,11 @@
-name: CI
+name: DEPLOY
 
 on:
   push:
     branches: [ main, master ]
   pull_request:
-    branches: [ main, master ]
+    types:
+      - closed
 
 env:
   REGISTRY: "cr.selcloud.ru/noskov-sergey"
@@ -12,7 +13,14 @@ env:
   CONTAINER_NAME: "crud-server-container"
 
 jobs:
-  image-build-and-push:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo The PR was merged
+
+  images-build-and-push:
     runs-on: ubuntu-latest
 
     steps:
