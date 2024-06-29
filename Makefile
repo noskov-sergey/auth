@@ -43,3 +43,17 @@ local-migration-up:
 
 local-migration-down:
 	${LOCAL_BIN}/goose.exe -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} down -v
+
+
+
+build:
+	GOOS=linux GOARCH=amd64 go build -o service_linux cmd/grpc_server/main.go
+
+copy-to-server:
+	scp service_linux root@45.12.231.178:
+
+
+docker-build-and-push:
+	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1 .
+	docker login -u token -p CRgAAAAAoUvVJ50Atz2MVMsa09Mi0MNVo9mZRrWD cr.selcloud.ru/noskov-sergey
+	docker push cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1
