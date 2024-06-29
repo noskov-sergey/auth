@@ -6,7 +6,7 @@ on:
   pull_request:
     types:
       - closed
-      -
+
 env:
   REGISTRY: "cr.selcloud.ru/noskov-sergey"
   IMAGE_NAME: "crud-server"
@@ -15,6 +15,11 @@ env:
 jobs:
   if_merged:
     if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo The PR was merged
+
   image-build-and-push:
     runs-on: ubuntu-latest
 
