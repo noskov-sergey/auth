@@ -30,7 +30,7 @@ jobs:
           TAG_NAME=$(echo $GITHUB_SHA | head -c7)
           docker buildx create --use
           docker buildx build --no-cache --push --tag $REGISTRY/$IMAGE_NAME:$TAG_NAME .
-        message: ${{ TAG_NAME }} успешно выполнен!
+          echo "::add-mask::$TAG_NAME"
 
   deploy-image:
     runs-on: ubuntu-latest
@@ -53,4 +53,5 @@ jobs:
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
             
             # Run a new container from a new image and TAG - $TAG
-            docker run -d -p 50051:50051 --name $CONTAINER_NAME -t $REGISTRY/$IMAGE_NAME:$TAG
+            docker run -d -p 50051:50051 --name $CONTAINER_NAME -t $REGISTRY/$IMAGE_NAME:$TAG_NAME
+            echo "::add-mask::$TAG_NAME"
