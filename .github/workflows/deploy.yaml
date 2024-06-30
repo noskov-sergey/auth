@@ -56,9 +56,8 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          TAG_NAME=$(echo $GITHUB_SHA | head -c7)
           docker buildx create --use
-          docker buildx build --no-cache --push --tag $REGISTRY/$IMAGE_NAME:$TAG_NAME .
+          docker buildx build --no-cache --push --tag $REGISTRY/$IMAGE_NAME:latest .
 
   deploy-image:
     runs-on: ubuntu-latest
@@ -72,17 +71,19 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          envs: IMAGE_NAME, REGISTRY, GITHUB_SHA, CONTAINER_NAME, TAG_NAME
+          envs: IMAGE_NAME, REGISTRY, GITHUB_SHA, CONTAINER_NAME
           script: |
-            # Set up variables
-            TAG_NAME=$(echo $GITHUB_SHA | head -c7)
-            sed -i "s/TAG_NAME=.*/TAG_NAME=$TAG_NAME/" .env
-            
             # Login into Selectel Registry
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
             
-            # Run a new container from a new image
-            docker-compose up -d --force-recreate --build auth 
+            # Pull new registry container
+            docker pull $REGISTRY/$IMAGE_NAME:latest
             
-            # Run migrations
+            # Run a new container from a new image
+            docker-compose up -d --force-recreate --db
+            
+            # Run a new container from a new image
+            docker-compose up -d --force-recreate --build auth
+            
+            # Run migrations1
             docker-compose up -d --force-recreate --build migrator
