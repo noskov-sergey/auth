@@ -52,6 +52,9 @@ build:
 copy-to-server:
 	scp service_linux root@45.12.231.178:
 
+copy-migrations-to-server:
+	scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./migrations/** root@45.12.231.178:~/auth/migrations
+
 docker-build-and-push:
 	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1 .
 	docker login -u token -p CRgAAAAAoUvVJ50Atz2MVMsa09Mi0MNVo9mZRrWD cr.selcloud.ru/noskov-sergey
