@@ -72,10 +72,11 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          envs: IMAGE_NAME, REGISTRY, GITHUB_SHA, CONTAINER_NAME
+          envs: IMAGE_NAME, REGISTRY, GITHUB_SHA, CONTAINER_NAME, TAG_NAME
           script: |
             # Set up variables
             TAG_NAME=$(echo $GITHUB_SHA | head -c7)
+            sed -i "s/TAG_NAME=.*/TAG_NAME=$TAG_NAME/" .env
             
             # Login into Selectel Registry
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
