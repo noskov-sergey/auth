@@ -4,7 +4,7 @@ COPY . /github.com/noskov-sergey/auth/source/
 WORKDIR /github.com/noskov-sergey/auth/source/
 
 RUN go mod download
-RUN go build -o ./bin/crud_server cmd/grpc_server/main.go
+RUN go build -o ./bin/auth_server cmd/grpc_server/main.go
 
 
 FROM alpine:latest
