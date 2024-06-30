@@ -114,7 +114,8 @@ jobs:
             docker rm $CONTAINER_NAME
             
             # Run a new container from a new image
+
             docker-compose up -d --force-recreate --build auth 
             
             # Run migrations
-            docker-compose up -d --force-recreate --build auth-migrator
+            docker-compose up -d --force-recreate --build migrator
