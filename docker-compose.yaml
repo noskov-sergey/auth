@@ -5,7 +5,7 @@ volumes:
 
 services:
   auth:
-    image: cr.selcloud.ru/olezhek/auth-server:${TAG_NAME}
+    image: cr.selcloud.ru/noskov-sergey/auth-server:${TAG_NAME}
     env_file:
       - "./auth/.env"
     ports:
