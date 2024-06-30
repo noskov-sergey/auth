@@ -10,6 +10,6 @@ RUN go build -o ./bin/crud_server cmd/grpc_server/main.go
 FROM alpine:latest
 
 WORKDIR /root/
-COPY --from=builder /github.com/noskov-sergey/auth/source/bin/crud_server .
+COPY --from=builder /github.com/noskov-sergey/auth/source/bin/auth_server .
 
-CMD ["./crud_server"]
+CMD ["./auth_server"]
