@@ -69,4 +69,4 @@ jobs:
             docker container run -d -p 50051:50051 --name $CONTAINER_NAME -t $REGISTRY/$IMAGE_NAME:$TAG_NAME
             
             # Run bd and migrations
-            sudo docker-compose up -d
+            docker-compose up -d
