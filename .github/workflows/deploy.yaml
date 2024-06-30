@@ -76,8 +76,14 @@ jobs:
             # Login into Selectel Registry
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
             
-            # Run a new container from a new image
-            docker-compose up -d --force-recreate --build auth 
+            # Pull new registry container
+            docker pull $REGISTRY/$IMAGE_NAME:latest
             
-            # Run migrations
+            # Run a new container from a new image
+            docker-compose up -d --force-recreate --db
+            
+            # Run a new container from a new image
+            docker-compose up -d --force-recreate --build auth
+            
+            # Run migrations1
             docker-compose up -d --force-recreate --build migrator
