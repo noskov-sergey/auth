@@ -2,7 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"flag"
+	"github.com/noskov-sergey/auth/internal/config"
 	desc "github.com/noskov-sergey/auth/pkg/user_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -19,6 +20,12 @@ const (
 	grpcPort = 50051
 	dbDSN    = "host=localhost port=54321 dbname=auth user=auth-user password=auth-password"
 )
+
+var configPath string
+
+func init() {
+	flag.StringVar(&configPath, "config-path", ".env", "path to config file")
+}
 
 type server struct {
 	desc.UnimplementedUserV1Server
@@ -62,7 +69,19 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*emptypb.
 }
 
 func main() {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", grpcPort))
+	flag.Parse()
+
+	err := config.Load(configPath)
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
+	grpcConfig, err := config.NewGPRCConfig()
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
+	lis, err := net.Listen("tcp", grpcConfig.Address())
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}

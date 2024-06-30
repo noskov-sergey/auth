@@ -36,13 +36,13 @@ LOCAL_MIGRATION_DIR=$(MIGRATION_DIR)
 LOCAL_MIGRATION_DSN="host=localhost port=$(PG_PORT) dbname=$(PG_DATABASE_NAME) user=$(PG_USER) password=$(PG_PASSWORD)"
 
 local-migration-status:
-	${LOCAL_BIN}/goose.exe -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} status -v
+	${LOCAL_BIN}/goose.exe -dir ${LOCAL_MIGRATION_DIR} postgres ${PG_DSN} status -v
 
 local-migration-up:
-	${LOCAL_BIN}/goose.exe -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} up -v
+	${LOCAL_BIN}/goose.exe -dir ${MIGRATION_DIR} postgres ${PG_DSN} up -v
 
 local-migration-down:
-	${LOCAL_BIN}/goose.exe -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} down -v
+	${LOCAL_BIN}/goose.exe -dir ${LOCAL_MIGRATION_DIR} postgres ${PG_DSN} down -v
 
 
 
@@ -51,7 +51,6 @@ build:
 
 copy-to-server:
 	scp service_linux root@45.12.231.178:
-
 
 docker-build-and-push:
 	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1 .
