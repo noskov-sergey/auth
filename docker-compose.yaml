@@ -5,14 +5,13 @@ volumes:
 
 services:
   auth:
-    image: cr.selcloud.ru/noskov-sergey/auth-server:${TAG_NAME}
+    image: cr.selcloud.ru/noskov-sergey/auth-server:latest
     env_file:
-      - ".env"
+      - .env
     ports:
       - "${GRPC_PORT}:${GRPC_PORT}"
     depends_on:
       - db
-      -
     restart: on-failure
 
   db:
@@ -30,4 +29,4 @@ services:
       dockerfile: migration.Dockerfile
     restart: on-failure
     env_file:
-      - "./auth/migration.env"
+      - .env
