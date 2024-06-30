@@ -5,9 +5,9 @@ volumes:
 
 services:
   auth:
-    image: cr.selcloud.ru/olezhek/auth-server:${TAG_NAME}
+    image: cr.selcloud.ru/noskov-sergey/auth-server:${TAG_NAME}
     env_file:
-      - "./auth/.env"
+      - ".env"
     ports:
       - "${GRPC_PORT}:${GRPC_PORT}"
     depends_on:
