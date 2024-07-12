@@ -86,7 +86,7 @@ jobs:
             echo MIGRATION_DIR=${{ secrets.MIGRATION_DIR }} >> .env
             echo PG_DSN=${{ secrets.PG_DSN }} >> .env
             echo MIGRATION_DSN=${{ secrets.MIGRATION_DSN }} >> .env
-            echo GRPC_HOST=${{ secrets.GRPC_HOST }} >> .env
+            
             echo GRPC_PORT=${{ secrets.GRPC_PORT }} >> .env
           
             # Run a new container from a new image
