@@ -55,7 +55,28 @@ copy-to-server:
 copy-migrations-to-server:
 	scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./migrations/** root@45.12.231.178:~/auth/migrations
 
-docker-build-and-push:
-	docker buildx build --no-cache --platform linux/amd64 -t cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1 .
+docker-selectel-build-and-push:
+	docker build --no-cache --build-arg grpc_host=localhost --build-arg grpc_port=50051 --build-arg pg_dsn="host=auth-db-1 port=54321 dbname=auth user=auth-user password=auth-password sslmode=disable" --platform linux/amd64 -t cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1 .
 	docker login -u token -p CRgAAAAAoUvVJ50Atz2MVMsa09Mi0MNVo9mZRrWD cr.selcloud.ru/noskov-sergey
 	docker push cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1
+
+docker-local-pull-and-install:
+	docker login -u token -p CRgAAAAAoUvVJ50Atz2MVMsa09Mi0MNVo9mZRrWD cr.selcloud.ru/noskov-sergey
+	docker pull cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1
+	docker run -p 50051:50051 cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1
+
+docker-selectel-pull-and-install:
+	ssh root@45.12.231.178
+	docker login -u token -p CRgAAAAAoUvVJ50Atz2MVMsa09Mi0MNVo9mZRrWD cr.selcloud.ru/noskov-sergey
+	docker pull cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1
+	docker run -p 50051:50051 cr.selcloud.ru/noskov-sergey/test_sever:v0.0.1
+
+docker-auth-local-build-and-compose-up:
+	docker build --build-arg grpc_host=localhost --build-arg grpc_port=50051 --build-arg pg_dsn="host=localhost port=54321 dbname=auth user=auth-user password=auth-password sslmode=disable" -t auth:latest .
+	docker-compose up -d
+
+
+
+#docker run --rm --name auth_db -e POSTGRES_PASSWORD=auth-password -e POSTGRES_USER=auth-user -e POSTGRES_DB=auth -p 54321:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
+
+#docker run --rm --name auth_db -e POSTGRES_DB=auth -e POSTGRES_USER=auth -e POSTGRES_PASSWORD=authpassword -p 54321:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data -d postgres
