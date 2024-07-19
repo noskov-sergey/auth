@@ -5,11 +5,15 @@ import (
 	"time"
 )
 
+type UserFilter struct {
+	UserID int `json:"Id"`
+}
+
 type User struct {
-	ID        int64
-	Name      string
-	Email     string
-	Role      int64
-	CreatedAt time.Time
-	UpdatedAt sql.NullTime
+	ID        int          `db:"id"`
+	Name      string       `db:"name"`
+	Email     string       `db:"email"`
+	Role      int          `db:"role"`
+	CreatedAt time.Time    `db:"created_at"`
+	UpdatedAt sql.NullTime `db:"updated_at"`
 }

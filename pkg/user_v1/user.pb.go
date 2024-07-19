@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v5.27.0
-// source: user.proto
+// source: users.proto
 
 package user_v1
 
@@ -333,7 +333,7 @@ type GetResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	User *User `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	User *User `protobuf:"bytes,1,opt,name=users,proto3" json:"users,omitempty"`
 }
 
 func (x *GetResponse) Reset() {
@@ -587,7 +587,7 @@ var file_user_proto_depIdxs = []int32{
 	8, // 1: user_v1.User.created_at:type_name -> google.protobuf.Timestamp
 	8, // 2: user_v1.User.updated_at:type_name -> google.protobuf.Timestamp
 	0, // 3: user_v1.CreateRequest.role:type_name -> user_v1.Enum
-	1, // 4: user_v1.GetResponse.user:type_name -> user_v1.User
+	1, // 4: user_v1.GetResponse.users:type_name -> user_v1.User
 	2, // 5: user_v1.UserV1.Create:input_type -> user_v1.CreateRequest
 	4, // 6: user_v1.UserV1.Get:input_type -> user_v1.GetRequest
 	6, // 7: user_v1.UserV1.Update:input_type -> user_v1.UpdateRequest
