@@ -10,8 +10,8 @@ import (
 func (r *UserRepository) Create(ctx context.Context, u model.User) (int, error) {
 	builder := sq.Insert(tableName).
 		PlaceholderFormat(sq.Dollar).
-		Columns(nameColumn, emailColumn, roleColumn).
-		Values(u.Name, u.Email, u.Role).
+		Columns(nameColumn, emailColumn, roleColumn, passwordColumn, confirmPasswordColumn).
+		Values(u.Name, u.Email, u.Role, u.Password, u.ConfirmPassword).
 		Suffix("RETURNING id")
 
 	sqlQuery, args, err := builder.ToSql()
