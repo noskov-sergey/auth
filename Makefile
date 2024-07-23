@@ -77,6 +77,6 @@ docker-auth-local-build-and-compose-up:
 
 
 
-#docker run --rm --name auth_db -e POSTGRES_PASSWORD=auth-password -e POSTGRES_USER=auth-user -e POSTGRES_DB=auth -p 54321:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
+#docker run --rm --name auth_db -e POSTGRES_PASSWORD=auth-password -e POSTGRES_USER=auth-users -e POSTGRES_DB=auth -p 54321:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
 
 #docker run --rm --name auth_db -e POSTGRES_DB=auth -e POSTGRES_USER=auth -e POSTGRES_PASSWORD=authpassword -p 54321:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data -d postgres

@@ -33,7 +33,7 @@ func NewGPRCConfig() (*grpcConfig, error) {
 
 	return &grpcConfig{
 		host: "",
-		port: "50051",
+		port: port,
 	}, nil
 }
 
