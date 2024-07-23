@@ -5,12 +5,14 @@ import "github.com/jackc/pgx/v5/pgxpool"
 const (
 	tableName = "users"
 
-	idColumn        = "id"
-	nameColumn      = "name"
-	emailColumn     = "email"
-	roleColumn      = "role"
-	createdAtColumn = "created_at"
-	updatedAtColumn = "updated_at"
+	idColumn              = "id"
+	nameColumn            = "name"
+	emailColumn           = "email"
+	roleColumn            = "role"
+	passwordColumn        = "password"
+	confirmPasswordColumn = "password_confirm"
+	createdAtColumn       = "created_at"
+	updatedAtColumn       = "updated_at"
 )
 
 type UserRepository struct {

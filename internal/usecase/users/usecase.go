@@ -12,10 +12,10 @@ type Repository interface {
 	Delete(ctx context.Context, id int) error
 }
 
-type useCase struct {
+type UseCase struct {
 	rep Repository
 }
 
-func New(rep Repository) *useCase {
-	return &useCase{rep: rep}
+func New(rep Repository) *UseCase {
+	return &UseCase{rep: rep}
 }

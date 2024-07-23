@@ -14,9 +14,11 @@ func ToUserFilterFromUser(req *desc.GetRequest) model.UserFilter {
 
 func ToServiceFromUser(req *desc.CreateRequest) model.User {
 	return model.User{
-		Name:  req.GetName(),
-		Email: req.GetEmail(),
-		Role:  int(req.GetRole()),
+		Name:            req.GetName(),
+		Email:           req.GetEmail(),
+		Role:            int(req.GetRole()),
+		Password:        req.GetPassword(),
+		ConfirmPassword: req.GetPasswordConfirm(),
 	}
 }
 
