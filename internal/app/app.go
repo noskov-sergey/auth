@@ -5,13 +5,13 @@ import (
 	"log"
 	"net"
 
-	"github.com/noskov-sergey/auth/internal/closer"
-	"github.com/noskov-sergey/auth/internal/config"
-	desc "github.com/noskov-sergey/auth/pkg/user_v1"
-
+	"github.com/noskov-sergey/platform-common/pkg/closer"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/noskov-sergey/auth/internal/config"
+	desc "github.com/noskov-sergey/auth/pkg/user_v1"
 )
 
 type App struct {
