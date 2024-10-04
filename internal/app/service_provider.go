@@ -3,8 +3,8 @@ package app
 import (
 	"context"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/noskov-sergey/auth/internal/closer"
 	"github.com/noskov-sergey/auth/internal/config"
+	"github.com/noskov-sergey/platform-common/pkg/closer"
 	"log"
 
 	userApi "github.com/noskov-sergey/auth/internal/api/users"
